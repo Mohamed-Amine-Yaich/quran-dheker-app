@@ -17,7 +17,7 @@ import SurahsList from "./SurahsList";
 const QuranScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.theme);
-  const font = useSelector((state) => state.font);
+  const font = useSelector((state) => state.font); 
 
   const handleChange = (item) => {
     navigation.navigate("Ayahs", { ...item,number: item.number - 1,scrollTo:item.scrollTo || 0});

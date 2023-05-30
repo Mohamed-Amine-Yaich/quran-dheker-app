@@ -1,7 +1,7 @@
 import { insertRecord, fetchRecords, deleteRecord } from "../db";
 import { Toast } from "native-base";
-import * as FileSystem from "expo-file-system";
-
+/* import * as FileSystem from "expo-file-system";
+ */
 export const addRecord = (name, url, length, date) => {
   let newPath;
   return async (dispatch) => {

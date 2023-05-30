@@ -1,5 +1,5 @@
-import * as SQLite from 'expo-sqlite';
-
+/* import * as SQLite from 'expo-sqlite';
+ */
 const db = SQLite.openDatabase('records.db');
 
 export const init = ()=>{

@@ -32,21 +32,23 @@ const RootStack = createStackNavigator();
 const ModalStack = createStackNavigator();
 
 const BottomTabs=()=>{
-	const theme=useSelector(state=>state.theme)
-  const font = useSelector(state=>state.font);
-	return <Tabs.Navigator  tabBarOptions={{
-		activeTintColor:theme.PRIMARY,
-		inactiveTintColor:theme.SECONDARY_TEXT,
-		labelStyle:{
+const theme=useSelector(state=>state.theme)
+  const font = useSelector(state=>state.font); 
+	return <Tabs.Navigator  screenOptions={{
+
+		tabBarActiveTintColor:theme.PRIMARY,
+		tabBarInactiveTintColor:theme.SECONDARY_TEXT,
+		tabBarLabelStyle:{
 			fontFamily:font.app.fontName,
 		},
-		tabStyle:{
+		tabBarStyle:{
 			backgroundColor:theme.BG,
 			
 		}   
-	}}>
+	}} 
+  >
    
-	<Tabs.Screen name='المصحف' component={QuranScreen}options={{
+	<Tabs.Screen name='المصحف' component={QuranScreen} options={{
 	tabBarIcon:({color, size })=><Quran color={color} size={size} />
     }}
 	/>
@@ -89,82 +91,7 @@ return <ModalStack.Navigator>
   </ModalStack.Navigator>
 }
 const Navigation = ()=>{
-  const check = async ()=>{
-  	   try{
-       const isNotificationsInitialized =await isInit();
-        const isPermissionAccepted= await askForPermission();
-        //await AsyncStorage.removeItem('isInit');
-        //cancelAll();
-       if(isPermissionAccepted){
-           if(isNotificationsInitialized)return
-           else{
-            // console.log(true)
-            // await AsyncStorage.removeItem('azkarElsbah')
-            // await AsyncStorage.removeItem('elwird')
-            // await AsyncStorage.removeItem('azkarElmsaa')
-            // await AsyncStorage.removeItem('eltsbeh')
-            //   console.log('done')
-           // console.log('done')
-             try{ 
-                let x = await init();
-                const sbah = {
-                	title:'أذكار الصباح',
-                	body:'اللّهُـمَّ إِنّـي أَعـوذُ بِكَ مِنَ الْكُـفر ، وَالفَـقْر ، وَأَعـوذُ بِكَ مِنْ عَذابِ القَـبْر ، لا إلهَ إلاّ أَنْـتَ.',
-                	time:(new Date(moment({ hour: 7 }))).getTime(),
-                	path:'azkarElsbah',
-                	isEnabled:true,
-                	id:null,
-                 selected:15
-                }
-                const msaa={
-                	title:'أذكار المساء',
-                	body:'اللّهُـمَّ بِكَ أَمْسَـينا وَبِكَ أَصْـبَحْنا، وَبِكَ نَحْـيا وَبِكَ نَمُـوتُ وَإِلَـيْكَ الْمَصِيرُ.',
-                	time: (new Date(moment({ hour: 20 })).getTime()),
-                	path:'azkarElmsaa',
-                	isEnabled:true,
-                	id:null,
-                  selected:12
-                }
-                const tsbeh={
-                  title:'التسبيح',
-                  body:'قَالَ صلى الله عليه وسلم مَنْ قَالَ: سُبْحَانَ اللَّهِ وَبِحَمْدِهِ فِي يَوْمٍ مِائَةَ مَرَّةٍ حُطَّتْ خَطَايَاهُ وَلَوْ كَانَتْ مِثْلَ زَبَدِ الْبَحْر.',
-                  time: (new Date(moment({ hour: 11 })).getTime()),
-                  path:'eltsbeh',
-                  isEnabled:false,
-                  id:null,
-                  selected:6
-                }
-                const elwird ={
-                  title:'الورد اليومي',
-                  body:null,
-                  time:(new Date(moment({ hour: 15 })).getTime()),
-                  path:'elwird',
-                  isEnabled:false,
-                  id:null,
-                  selected:0,
-                  number:10
-                }
-               
-              let y = await setNotification(sbah);
-               sbah.id = y;
-               let z = await setNotification(msaa);
-               msaa.id=z;
-               await safeOne(sbah)
-               await safeOne(msaa)
-               await safeOne(tsbeh)
-               await safeOne(elwird)
-           }catch(err){
-           }
 
-           }
-       }
-   }catch(err){
-      alert('Failed to get push token for push notification!');
-   } 
-  }
-React.useEffect(()=>{
-	check();
-},[])
 	return <NavigationContainer>
 	<RootStack.Navigator mode="modal">
   <RootStack.Screen name='Main' options={{headerShown:false}} component={MainStackComp} /> 
@@ -172,4 +99,4 @@ React.useEffect(()=>{
 	</RootStack.Navigator>
 	</NavigationContainer>
 }
-export default MainStackComp;
+export default Navigation;

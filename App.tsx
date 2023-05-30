@@ -15,17 +15,9 @@ import Navigation from './src/navigation/Navigation';
 import MainStackComp from './src/navigation/Navigation';
 import {NavigationContainer} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Root} from 'native-base';
+import {NativeBaseProvider, Box} from 'native-base';
 import {Provider, useDispatch} from 'react-redux';
 import store from './src/store';
-/* init()
-  .then(() => {
-   // console.log('Initialized database');
-  })
-  .catch(err => {
-    console.log('Initializing db failed.');
-    console.log(err);
-}); */
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -45,8 +37,8 @@ const Main = () => {
         dispatch({type: 'SET_FONT', payload: resFont});
       }
       const s = await AsyncStorage.getItem('islamghanyModdakir');
-      
-     if(s) dispatch({type: 'SET_AYAY_STOP', payload: JSON.parse(s)});
+
+      if (s) dispatch({type: 'SET_AYAY_STOP', payload: JSON.parse(s)});
     } catch (err) {
       console.log(err);
     }
@@ -78,13 +70,13 @@ export default function App() {
       {ar: require('./src/assets/fonts/ar-Quran1.ttf')},
       {tijwal: require('./src/assets/fonts/Tajawal-Regular.ttf')},
     ];
-  /*   const chachedImages = images.map(image =>
+    /*   const chachedImages = images.map(image =>
       Asset.fromModule(image).downloadAsync(),
     );
     const chachedFonts = fonts.map(font => Font.loadAsync(font)); 
 
     return Promise.all([...chachedImages, ...chachedFonts]);*/
-    return [images,fonts]
+    return [images, fonts];
   };
   fetchAssests().then(result => {
     console.log(result);
@@ -105,18 +97,15 @@ export default function App() {
   }   */
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Root>
-          <MainStackComp />
-          {/*    <Main />  */}
-
-          {/*  <DoaaScreen />  */}
-          {/*  <QuranScreen/>  */}
-          {/* <Stream /> */}
-        </Root>
-      </NavigationContainer>
-    </Provider>
+    <NativeBaseProvider>
+      <Box>
+        <Provider store={store}>
+          <NavigationContainer>
+            <Main />
+          </NavigationContainer>
+        </Provider>
+      </Box>
+    </NativeBaseProvider>
   );
   // return <View style={{
   //   backgroundColor:'red',
