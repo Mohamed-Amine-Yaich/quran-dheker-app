@@ -1,0 +1,20 @@
+{
+    "cli": {
+      "version": ">= 0.47.0"
+    },
+    "build": {
+      "preview": {
+        "android": {
+          "buildType": "apk"
+        }
+      },
+      "production": {
+        "env": {
+            "ANDROID_SDK_ROOT": "/home/abdenassar/Android/Sdk"
+        },
+        "android": {
+          "gradleCommand": ":app:assembleRelease"
+        }
+      }
+    }
+  }

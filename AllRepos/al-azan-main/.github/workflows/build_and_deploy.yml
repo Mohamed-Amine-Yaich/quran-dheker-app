@@ -1,0 +1,124 @@
+name: build dev
+
+on:
+  release:
+    types: [published]
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: cimg/android:2022.08.1-ndk
+      options: --user root
+    
+    steps:
+    - name: install git
+      run: |
+        sudo apt-get update;
+        sudo apt-get -y install git;
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with: 
+        submodules: 'true'
+
+    - name: Setup java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        build-root-directory: android
+
+    - name: Setup node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    
+    - name: Install yarn
+      run: npm install -g yarn
+    
+    - name: Load Cache
+      uses: actions/setup-node@v3
+      with:
+        cache: 'yarn'
+    
+    - name: Install packages
+      run: yarn install --frozen-lockfile  # install project deps with --frozen-lockfile to make sure we will have the same packages version ( very recommended  on running yarn install on ci)
+
+    - name: patch notifee rn package
+      run: |
+        sed -E -i 's/^.*(fabric|com\.(crashlytics|google\.(firebase|android.gms))).*$//g' ./node_modules/@notifee/react-native/android/build.gradle
+
+    - name: Compile lingui.js locales
+      run: |
+        sed "s/<TRANSLATION_IO_APIKEY>//" lingui.config.js.example > lingui.config.js;
+        yarn lingui compile;
+
+    - name: Make Gradlew Executable
+      run: cd android && chmod +x ./gradlew
+
+    - name: build
+      run: |
+        cd android
+        ./gradlew --no-daemon :app:bundleRelease -PnoSign
+        ./gradlew --no-daemon :app:assembleRelease -PnoSign -PuseLegacyPackaging=true
+
+    - name: Sign App Apk
+      if: ${{ github.event_name == 'release'}}
+      uses: r0adkll/sign-android-release@v1
+      with:
+        releaseDirectory: android/app/build/outputs/apk/release
+        signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
+        alias: ${{ secrets.ANDROID_ALIAS }}
+        keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
+        keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      env: 
+        # build tools version is found inside cimg/android related tag pulled layers details inside docker hub. after `...-c SDK_TOOLS_URL=...`
+        BUILD_TOOLS_VERSION: "33.0.0" 
+
+    - name: Sign App Bundle
+      if: ${{ github.event_name == 'release' }}
+      uses: r0adkll/sign-android-release@v1
+      with:
+        releaseDirectory: android/app/build/outputs/bundle/release
+        signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
+        alias: ${{ secrets.ANDROID_ALIAS }}
+        keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
+        keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      env: 
+        # build tools version is found inside cimg/android related tag pulled layers details inside docker hub. after `...-c SDK_TOOLS_URL=...`
+        BUILD_TOOLS_VERSION: "33.0.0" 
+       
+    - name: Release on GitHub
+      uses: ncipollo/release-action@v1
+      with:
+        prerelease: true
+        omitBody: true
+        omitBodyDuringUpdate: true
+        omitName: true
+        allowUpdates: true
+        replacesArtifacts: true
+        updateOnlyUnreleased: true
+        artifacts: android/app/build/outputs/apk/release/*signed.apk,android/app/build/outputs/bundle/release/*.aab
+
+    - name: Push to Play Store
+      if: ${{ github.event_name == 'release' && !contains(github.ref, '-rc') }}
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        packageName: com.github.meypod.al_azan
+        releaseFiles: android/app/build/outputs/bundle/release/*.aab
+        track: internal
+        status: draft
+        changesNotSentForReview: true
+        

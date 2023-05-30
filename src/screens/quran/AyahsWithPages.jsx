@@ -1,6 +1,5 @@
 import  React,{useEffect,useState} from 'react';
 import { Text,  Animated, View,Image, AsyncStorage,StyleSheet,ImageBackground,Dimensions,TouchableWithoutFeedback } from 'react-native';
-import Constants from 'expo-constants';
 import {
   Container,
   Header,
@@ -14,7 +13,7 @@ import {
   Title,
   Content
 } from "native-base";
-import {LinearGradient} from 'expo-linear-gradient'
+import LinearGradient from 'react-native-linear-gradient';
 import {SurahNameContiner , NumberWrapper,LeftArrowIOS,RightArrowIOS,Share,
   Help,
   Stop,

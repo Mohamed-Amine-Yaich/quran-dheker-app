@@ -1,10 +1,9 @@
 import React from "react";
-import { View, FlatList, Text, Dimensions,ScrollView } from "react-native";
+import { View, FlatList, Text, Dimensions,ScrollView,StatusBar } from "react-native";
 import { useSelector } from "react-redux";
 import Svg, { Path } from "react-native-svg";
 import { LeftArrowIOS } from "../../assets/icons";
 import { Spinner, Button } from "native-base";
-import Constants from "expo-constants";
 const { width } = Dimensions.get("window");
 function Divider(props) {
   return (
@@ -46,7 +45,7 @@ const AzkarScreen = ({ navigation, route }) => {
               height: 50,
               justifyContent: "center",
               alignItems: "center",
-              marginTop: Constants.statusBarHeight,
+              marginTop: 20,//height of the status bar
             }}
           >
             <LeftArrowIOS color={theme.BG} size={30} />

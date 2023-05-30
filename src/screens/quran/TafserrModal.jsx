@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import { Close, Help } from "../../assets/icons/";
 import Modal from "react-native-modal";
-import Constants from "expo-constants";
-import { useDispatch, useSelector } from "react-redux";
+/* import Constants from "expo-constants";
+ */import { useDispatch, useSelector } from "react-redux";
 import { Button } from "native-base";
 import { Text } from "react-native";
-import {LinearGradient} from 'expo-linear-gradient'
+import LinearGradient from "react-native-linear-gradient";
 
 const RenderText = ({quran,color }) => {
   const tafseer = useSelector((state) => state.tafseer);
@@ -65,7 +65,7 @@ const TafseerModal = ({
         <View
           style={{
             marginHorizontal: 5,
-            marginTop: Constants.statusBarHeight,
+            marginTop: 20,
             flex: 1,
             justifyContent: "center",
           }}

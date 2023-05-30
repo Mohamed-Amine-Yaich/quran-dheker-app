@@ -1,11 +1,10 @@
-import { Notifications } from 'expo';
-import {AsyncStorage} from 'react-native';
+/* import { Notifications } from 'expo'; */
 import azkar from '../store/azkar.js'
-import Constant from "expo-constants";
-import * as Permissions from 'expo-permissions';
+/* import * as Permissions from 'expo-permissions'; */
+import AsyncStorage from '@react-native-async-storage/async-storage';
  
 export const askForPermission = async()=>{
-	if (Constant.isDevice) {
+	if (/* Constant.isDevice */true) { //check if the app run a real dev
 	    const { status: existingStatus } = await Permissions.getAsync(
 	      Permissions.NOTIFICATIONS
 	    );

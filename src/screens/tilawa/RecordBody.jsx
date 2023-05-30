@@ -4,8 +4,7 @@ import { View, Text, Slider, Dimensions } from "react-native";
 import { Button, Toast, Spinner } from "native-base";
 import { Trash, Pause, Play, Check } from "../../assets/icons/";
 import * as Animatable from "react-native-animatable";
-import * as Permissions from "expo-permissions";
-import * as FileSystem from "expo-file-system";
+/* import * as FileSystem from "expo-file-system"; */
 import { addRecord } from "../../store/actions";
 import { useSelector, useDispatch } from "react-redux";
 import Dialog from "react-native-dialog";

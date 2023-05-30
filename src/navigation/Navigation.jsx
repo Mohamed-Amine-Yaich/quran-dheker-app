@@ -25,7 +25,7 @@ import {isInit,init,safeOne,cancelAll,cancelNotification,setNotification,askForP
 import azkar from '../store/azkar.js'
 import moment from "moment";
 
-import Constants from 'expo-constants';
+/* import Constants from 'expo-constants'; */
 const Tabs = createBottomTabNavigator();
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();

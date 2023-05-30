@@ -2,7 +2,7 @@ import React from 'react';
 import {View,Dimensions,Share,Text} from 'react-native';
 import {Button} from 'native-base';
 import ViewShot,{captureRef} from 'react-native-view-shot';
-import {LinearGradient} from 'expo-linear-gradient'
+import LinearGradient from 'react-native-linear-gradient';
 const {width} = Dimensions.get('window');
 class SharingTextAsImage extends React.Component{
 	 constructor(props){

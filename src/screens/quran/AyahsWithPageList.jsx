@@ -71,7 +71,7 @@ const RenderAyah = React.memo(({theme,item,font,name,juz,isSelected,stopRead,pag
 
  
 let counter;
-const HEADER_HEIGHT = 44 + Constants.statusBarHeight;
+const HEADER_HEIGHT = 44 + 20;//height of the status bar
 
 let _previousScrollvalue,_currentScrollValue,_scrollEndTimer;
 const AyahsWithPageList = ({ theme, scrollTo=0,name,number,numberInPage,page ,font,goBack}) => {
