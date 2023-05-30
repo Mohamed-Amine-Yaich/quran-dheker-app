@@ -11,7 +11,7 @@ import {
   Title,
 } from "native-base";
 import { useSelector, useDispatch } from "react-redux";
-import { Search } from "../../assets/icons/";
+import { Search } from "../../assets/icons";
 import SurahsList from "./SurahsList";
 
 const QuranScreen = ({ navigation }) => {

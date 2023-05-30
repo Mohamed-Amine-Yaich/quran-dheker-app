@@ -99,10 +99,8 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <Box>
-        <Provider store={store}>
-          <NavigationContainer>
-            <Main />
-          </NavigationContainer>
+        <Provider store={store}>         
+            <Main />      
         </Provider>
       </Box>
     </NativeBaseProvider>

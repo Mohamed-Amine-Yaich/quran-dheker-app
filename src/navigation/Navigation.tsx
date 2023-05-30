@@ -1,7 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack'
-import QuranScreen from '../screens/quran'
+import QuranScreen from '../screens/quran/QuranScreen'
 import AyahsWithPages from '../screens/quran/AyahsWithPages.jsx'
 
 import SettingsScreen from '../screens/settings'
