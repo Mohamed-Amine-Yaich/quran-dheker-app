@@ -10,9 +10,11 @@ import {
   Right,
   Title,
 } from "native-base";
+
 import { useSelector, useDispatch } from "react-redux";
 import { Search } from "../../assets/icons";
 import SurahsList from "./SurahsList";
+import { Text } from "react-native";
 
 const QuranScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -23,7 +25,8 @@ const QuranScreen = ({ navigation }) => {
     navigation.navigate("Ayahs", { ...item,number: item.number - 1,scrollTo:item.scrollTo || 0});
   };
   return (
-    <Container style={{ backgroundColor: "transparent" }}>
+    <Text>hi</Text>
+   /*  <Container style={{ backgroundColor: "transparent" }}>
       <Header hasTabs style={{ backgroundColor: theme.PRIMARY }}>
         <Left>
           <Button transparent onPress={() => navigation.navigate("Search")}>
@@ -92,7 +95,7 @@ const QuranScreen = ({ navigation }) => {
           />
         </Tab>
       </Tabs>
-    </Container>
+    </Container> */
   );
 };
 

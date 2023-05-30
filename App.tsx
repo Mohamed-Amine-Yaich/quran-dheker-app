@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeBaseProvider, Box} from 'native-base';
 import {Provider, useDispatch} from 'react-redux';
 import store from './src/store';
+import QuranScreen from './src/screens/quran/QuranScreen';
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -97,13 +98,13 @@ export default function App() {
   }   */
 
   return (
-    <NativeBaseProvider>
+  <NativeBaseProvider>
       <Box>
         <Provider store={store}>         
             <Main />      
         </Provider>
       </Box>
-    </NativeBaseProvider>
+    </NativeBaseProvider> 
   );
   // return <View style={{
   //   backgroundColor:'red',
